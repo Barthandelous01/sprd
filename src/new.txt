@@ -1,0 +1,4 @@
+This is a file.
+Do _es confuse it?
+Do semicolons; it would be sad if they did.
+Can it, maybe, deal with commas, or, say, periods?
