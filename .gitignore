@@ -1,0 +1,3 @@
+*.org
+src/sprd
+src/*.dSYM
