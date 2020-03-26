@@ -5,7 +5,7 @@ DEFAULT_GOAL := default
 default:
 	g++ -std=c++11 -O3 -o sprd sprd.cpp
 
-instal:
+install:
 	../scripts/install.sh
 
 clean:
