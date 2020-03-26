@@ -10,7 +10,7 @@
 #include "chunks.hpp"
 
 void usage() {
-     std::cout << "Usage: sprd -f file [-w WPM] [-c chunks]";
+     std::cout << "Usage: sprd -f file [-w WPM] [-c chunks] [-r resume_chunk]";
      exit(-1);
 }
 
@@ -19,11 +19,12 @@ int main(int argc, char *argv[])
      // set up some variabes
      int speed = 250;
      int chunk = 1;
+     int res = 1;
      std::string filename = "";
 
      // argument parsing.
      int opt;
-     while ((opt = getopt(argc, argv, "f:hw:c:")) != -1) {
+     while ((opt = getopt(argc, argv, "f:hw:c:r:")) != -1) {
           switch (opt) {
           case 'f' :
                filename = optarg;
@@ -37,6 +38,9 @@ int main(int argc, char *argv[])
           case 'c':
                chunk = atoi(optarg);
                break;
+          case 'r':
+               res = atoi(optarg);
+               break;
           case ':':
                usage();
                break;
@@ -48,5 +52,5 @@ int main(int argc, char *argv[])
      std::vector<std::string> words = chunks(file);
 
      // do spray
-     spray(words, speed, chunk);
+     spray(words, speed, chunk, res);
 }

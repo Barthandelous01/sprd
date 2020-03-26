@@ -13,16 +13,20 @@
 using std::vector;
 using std::string;
 
-void spray(vector<string> words, int wpm, int chunks)
+void spray(vector<string> words, int wpm, int chunks, int resume)
 {
      // set up variables
      std::chrono::milliseconds delay = time_per_word(wpm, chunks);
-     centerstring("  ▼");
+     centerstring("| ");
      std::cout << std::endl;
      string temp = "";
      int index = 1;
 
      for (string x : words) {
+          if (index < resume) {
+               index++;
+               continue;
+          }
           temp += x + " ";
           if (index % chunks == 0) {
                centerstring(temp.c_str());
