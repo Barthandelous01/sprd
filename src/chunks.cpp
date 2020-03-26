@@ -23,18 +23,13 @@ vector<string> chunks(string file)
 
 void centerstring(const char *s)
 {
-     // initial buffer clear
-     std::cout << "\r";
-     for (int x = 0; x <= 80; x++)
-          std::cout << " ";
-     std::cout << "\r";
 
      //print padding to center
      int l = strlen(s);
      int pos=(int)((80-l)/2);
      for(int i = 0; i < pos; i++)
           std::cout << " ";
-     std::cout << s << std::flush;
+     std::cout << s << "     \r" << std::flush;
 }
 
 #endif /* CHUNKS_CPP_ */

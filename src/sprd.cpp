@@ -2,15 +2,17 @@
 #include <unistd.h>
 #include <chrono>
 #include <thread>
+#include <vector>
+#include <string>
 
-#include "chunks.hpp"
+#include "spritz.hpp"
 #include "file.hpp"
+#include "chunks.hpp"
 
 void usage() {
      std::cout << "Usage: sprd -f file [-w WPM] [-c chunks]";
      exit(-1);
 }
-
 
 int main(int argc, char *argv[])
 {
@@ -19,9 +21,9 @@ int main(int argc, char *argv[])
      int chunk = 1;
      std::string filename = "";
 
-     // arg parsing switch var
+     // argument parsing.
      int opt;
-     while ((opt = getopt(argc, argv, "f:hw")) != -1) {
+     while ((opt = getopt(argc, argv, "f:hw:c:")) != -1) {
           switch (opt) {
           case 'f' :
                filename = optarg;
@@ -29,19 +31,22 @@ int main(int argc, char *argv[])
           case 'h':
                usage();
                break;
+          case 'w':
+               speed = atoi(optarg);
+               break;
+          case 'c':
+               chunk = atoi(optarg);
+               break;
           case ':':
-               std::cout << "That needs an argument.\n";
                usage();
                break;
           }
      }
 
+     // get file data
      std::string file = read_file(filename);
      std::vector<std::string> words = chunks(file);
-     centerstring("\\/");
-     std::cout << "\n";
-     for (std::string x : words) {
-          centerstring(x.c_str());
-          std::this_thread::sleep_for(std::chrono::milliseconds(500));
-     }
+
+     // do spray
+     spray(words, speed, chunk);
 }
