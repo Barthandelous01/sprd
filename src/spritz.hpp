@@ -3,6 +3,6 @@
 
 #include "spritz.cpp"
 
-void spray(std::vector<std::string> words, int wpm, int chunks);
+void spray(std::vector<std::string> words, int wpm, int chunks, int resume);
 
 #endif /* SPRITZ_HPP */

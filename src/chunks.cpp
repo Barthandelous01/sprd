@@ -36,4 +36,12 @@ void centerstring(const char *s)
      std::cout << s << "     \r" << std::flush;
 }
 
+void raw() {
+     printf("%s", "\e[?25l");
+}
+
+void unraw() {
+     printf("%s", "\e[?25h");
+}
+
 #endif /* CHUNKS_CPP_ */

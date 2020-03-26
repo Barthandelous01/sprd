@@ -51,6 +51,12 @@ int main(int argc, char *argv[])
      std::string file = read_file(filename);
      std::vector<std::string> words = chunks(file);
 
+     //set raw mode
+     raw();
+
      // do spray
      spray(words, speed, chunk, res);
+
+     // remove raw
+     unraw();
 }
