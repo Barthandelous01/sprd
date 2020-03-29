@@ -12,6 +12,13 @@
 
 int ind = 1;
 
+void sig_term(int signum)
+{
+     std::cout << "\x1b[A" << std::flush;
+     centerstring("| ");
+     std::cout << std::endl;
+}
+
 void exit_int(int signum)
 {
      unraw();
@@ -28,6 +35,7 @@ int main(int argc, char *argv[])
 {
      // set up handler for SIGINT
      signal(SIGINT, &exit_int);
+     signal(SIGWINCH, &sig_term);
      // set up some variabes
      int speed = 250;
      int chunk = 1;
