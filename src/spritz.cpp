@@ -13,15 +13,14 @@
 using std::vector;
 using std::string;
 
-void spray(vector<string> words, int wpm, int chunks, int resume)
+void spray(vector<string> words, int wpm, int chunks, int &resume)
 {
      // set up variables
      std::chrono::milliseconds delay = time_per_word(wpm, chunks);
      centerstring("| ");
      std::cout << std::endl;
      string temp = "";
-     int index = 1;
-
+     int index = 0;
      for (string x : words) {
           if (index < resume) {
                index++;
@@ -35,8 +34,11 @@ void spray(vector<string> words, int wpm, int chunks, int resume)
                std::this_thread::sleep_for(delay);
           }
           index++;
+          resume++;
      }
 }
+
+
 
 
 #endif /* SPRITZ_CPP_ */

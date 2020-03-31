@@ -3,12 +3,29 @@
 #include <chrono>
 #include <thread>
 #include <vector>
+#include <csignal>
 #include <string>
 
 #include "spritz.hpp"
 #include "file.hpp"
 #include "chunks.hpp"
 #include "config.hpp"
+
+int ind = 1;
+
+void sig_term(int signum)
+{
+     std::cout << "\x1b[A" << std::flush;
+     centerstring("| ");
+     std::cout << std::endl;
+}
+
+void exit_int(int signum)
+{
+     unraw();
+     std::cout << std::endl << "To resume from this point, run with -r " << ind << std::endl;
+     exit(0);
+}
 
 void usage() {
      std::cout << "Usage: sprd -f file [-w WPM] [-c chunks] [-r resume_chunk]";
@@ -17,10 +34,12 @@ void usage() {
 
 int main(int argc, char *argv[])
 {
+     // set up handler for SIGINT
+     signal(SIGINT, &exit_int);
+     signal(SIGWINCH, &sig_term);
      // set up some variabes
      int speed = 250;
      int chunk = 1;
-     int res = 1;
      std::string filename = STDINPUT;
 
      // argument parsing.
@@ -40,7 +59,7 @@ int main(int argc, char *argv[])
                chunk = atoi(optarg);
                break;
           case 'r':
-               res = atoi(optarg);
+               ind = atoi(optarg);
                break;
           case ':':
                usage();
@@ -56,7 +75,7 @@ int main(int argc, char *argv[])
      raw();
 
      // do spray
-     spray(words, speed, chunk, res);
+     spray(words, speed, chunk, ind);
 
      // remove raw
      unraw();

@@ -26,10 +26,10 @@ I was (as a RSVP-using speedreader myself) in search of a command-line based spe
 * complied, not interpreted
 * auto-centering output
 * resuming from a point
+* dynamically handeled `sigterm`
 
 ## Planned features
 Some features that (if I have time) may be added are:
-* dynamically handeled `sigterm`
 * built-in file decoders
 
 As a side note, I wrote a `.docx` decoder called [`redocx`](https://github.com/Barthandelous01/redocx) that synergizes well with reading from Word document archives.

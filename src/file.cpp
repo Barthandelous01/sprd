@@ -22,7 +22,6 @@ string read_file(string path)
                buffer.append(" ");
           }
      } else {
-          std::cout << "stdin\n";
           string line;
           while(std::cin) {
                std::getline(std::cin, line);
