@@ -27,6 +27,7 @@ I was (as a RSVP-using speedreader myself) in search of a command-line based spe
 * auto-centering output
 * resuming from a point
 * dynamically handeled `sigterm`
+* Reading from `stdin` or a file
 
 ## Planned features
 Some features that (if I have time) may be added are:
