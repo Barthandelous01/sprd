@@ -8,6 +8,7 @@
 #include "spritz.hpp"
 #include "file.hpp"
 #include "chunks.hpp"
+#include "config.hpp"
 
 void usage() {
      std::cout << "Usage: sprd -f file [-w WPM] [-c chunks] [-r resume_chunk]";
@@ -20,7 +21,7 @@ int main(int argc, char *argv[])
      int speed = 250;
      int chunk = 1;
      int res = 1;
-     std::string filename = "";
+     std::string filename = STDINPUT;
 
      // argument parsing.
      int opt;
