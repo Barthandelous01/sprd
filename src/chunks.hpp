@@ -1,9 +1,10 @@
 #ifndef CHUNKS_HPP_
 #define CHUNKS_HPP_
 
-#include "chunks.cpp"
+#include <vector>
+#include <string>
 
-vector<string> chunks(string file);
+std::vector<std::string> chunks(std::string file);
 void centerstring(const char *s);
 void raw();
 void unraw();

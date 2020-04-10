@@ -1,7 +1,7 @@
 #ifndef FILE_HPP_
 #define FILE_HPP_
 
-#include "file.cpp"
+#include <string>
 
 std::string read_file(std::string path);
 

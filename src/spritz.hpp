@@ -1,7 +1,8 @@
 #ifndef SPRITZ_HPP_
 #define SPRITZ_HPP_
 
-#include "spritz.cpp"
+#include <vector>
+#include <string>
 
 void spray(std::vector<std::string> words, int wpm, int chunks, int &resume);
 
