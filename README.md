@@ -8,11 +8,11 @@ $ sprd -f file [-w wpm] [-c chunk_number] [-r resume_point]
 ```
 
 ## Installation
-`sprd` does not have any libraries it depends on; all you need is a `c++11` or later complient compiler. To install, simply clone the repo, and run:
+`sprd` is maintained using the GNU autotools. To build, simply download the tarball, unzip it, and follow the ritual:
 ```sh
-cd /path/to/cloned/repo/sprd/src
+./configure
 make
-make install # this may require root
+sudo make install
 ```
 
 ## Inspiration
@@ -37,3 +37,6 @@ As a side note, I wrote a `.docx` decoder called [`redocx`](https://github.com/B
 
 ## Benchmarks
 Though this is anecdotal, I personally can read with 100% comprehension at 1050 WPM using 2-word chunks.
+
+## Contributing
+All contributions are welcome! To contribute, fork the repo, make a branch with your new feature, push it to GitHub, and submit a PR. The autotools files are left in the repo, so you can make the build system easily.
