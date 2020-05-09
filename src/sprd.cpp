@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
      // set up handler for SIGINT
      signal(SIGINT, &exit_int);
      signal(SIGWINCH, &sig_term);
+
      // set up some variabes
      int speed = 250;
      int chunk = 1;
