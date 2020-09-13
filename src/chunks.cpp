@@ -1,9 +1,16 @@
 #ifndef CHUNKS_CPP_
 #define CHUNKS_CPP_
 
-#include <iostream>
+#ifdef _WIN32
+#include <windows.h>
+#endif
+#ifdef __linux
 #include <sys/ioctl.h>
 #include <unistd.h>
+#endif
+
+
+#include <iostream>
 #include <vector>
 #include <sstream>
 #include <cstring>
