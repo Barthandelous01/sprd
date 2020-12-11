@@ -29,3 +29,16 @@ void sleep_ms(int ms)
 	usleep((ms % 1000) * 1000);
 #endif
 }
+
+/**
+ * time_incriment() - get the amount we should be sleeping
+ * @wpm: the goal WPM
+ * @chunks: the number of chunks being used
+ *
+ * time_incriment() returns the number of miliseconds to
+ * sleep to correctly based on WPM and number of chunks used.
+ */
+int time_incriment(int wpm, int chunks)
+{
+	return 60000/(wpm/chunks);
+}
