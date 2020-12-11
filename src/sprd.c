@@ -15,9 +15,10 @@
 #include <getopt.h>
 #include <stdio.h>
 
-#define SIGWINCH 31
+#include "display.h"
+#include "sleep.h"
 
-void sleep_ms(int ms);
+#define SIGWINCH 31
 
 static struct option longopts[] = {
 	{"file", required_argument, NULL, 'f'},
@@ -50,8 +51,8 @@ void version()
 int main(int argc, char *argv[])
 {
 	/* declare variables */
-	char *filename;
-	int opt, speed = 250, chunks = 1, ind = 1;
+	char *filename = "";
+	int opt = 0, speed = 250, chunks = 1, ind = 1;
 
 	/* set up signal handlers */
 	signal(SIGINT, &exit_int);
@@ -93,7 +94,6 @@ int main(int argc, char *argv[])
 	}
 
 	/* do things */
-	printf("%s\n", "Do default thing");
 
 	return EXIT_SUCCESS;
 }
