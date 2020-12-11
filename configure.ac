@@ -14,10 +14,22 @@ AC_CONFIG_FILES([
 # Checks for programs.
 AC_PROG_CC
 
-# Checks for libraries.
-
 # Checks for header files.
 AC_CHECK_HEADERS([unistd.h])
+
+# Check for POSIX complience
+AC_EGREP_CPP(posix_199309L_supported,
+             [#define _POSIX_C_SOURCE 199309L
+              #include <unistd.h>
+              #ifdef _POSIX_VERSION
+              #if _POSIX_VERSION >= 199309L
+              posix_199309L_supported
+              #endif
+              #endif
+             ],
+             [AC_DEFINE([_POSIX_C_SOURCE], [199309L], [Set POSIX version])],
+             [AC_MSG_FAILURE([*** Implementation must conform to the POSIX.1-1993 standard.])]
+)
 
 # Checks for typedefs, structures, and compiler characteristics.
 

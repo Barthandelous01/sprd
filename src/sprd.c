@@ -15,6 +15,10 @@
 #include <getopt.h>
 #include <stdio.h>
 
+#define SIGWINCH 31
+
+void sleep_ms(int ms);
+
 static struct option longopts[] = {
 	{"file", required_argument, NULL, 'f'},
 	{"help", no_argument, NULL, 'h'},
