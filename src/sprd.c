@@ -8,6 +8,8 @@
 
 #ifndef HAVE_MMAP
 #  error "You need at least a *nix compatability layer to use sprd"
+#else
+#  include <sys/mman.h>
 #endif	/* HAVE_MMAP */
 
 #ifdef HAVE_SIGNAL_H
@@ -18,6 +20,9 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include <stdio.h>
+#include <fcntl.h>
+#include <string.h>
+#include <sys/stat.h>
 
 #include "display.h"
 #include "sleep.h"
@@ -34,7 +39,7 @@ static struct option longopts[] = {
 };
 
 /* These are global so that signals can modify them */
-int opt = 0, speed = 250, chunks = 1, ind = 1, width = 80;
+int speed = 250, ind = 1, width = 80;
 
 #ifdef HAVE_SIGNAL_H
 void sig_term(int signum)
@@ -77,8 +82,10 @@ void version()
 
 int main(int argc, char *argv[])
 {
-	/* declare variables */
-	char *filename = "a long testing string";
+	int opt = 0, chunks = 1, fd;
+	char *filename = "-", *file;
+	struct stat s;
+	int size;
 
 	/* set up signal handlers */
 #ifdef HAVE_SIGNAL_H
@@ -117,6 +124,30 @@ int main(int argc, char *argv[])
 			break;
 		}
 	}
+
+	if (strcmp(filename, "-") == 0)
+		fd = STDIN_FILENO;
+	else
+		fd = open(filename, O_RDONLY);
+
+
+	if (fstat(fd, &s) == -1) {
+		return EXIT_FAILURE;
+	} else {
+		if (isatty(fd) ||
+			(s.st_mode & S_IFMT) == S_IFIFO) {
+			fprintf(stderr, "Cannot read from a pipe or interactive terminal."
+				"\nPlease try using a redirection operator (like <) instead.\n");
+			return EXIT_FAILURE;
+		}
+		size = s.st_size;
+	}
+
+	if ((file = mmap(NULL, size, PROT_READ, MAP_SHARED, fd, 0)) == MAP_FAILED)
+		return EXIT_FAILURE;
+
+	if (munmap(file, size) != 0)
+		return EXIT_FAILURE;
 
 	/* do things */
 
