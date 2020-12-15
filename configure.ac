@@ -16,6 +16,7 @@ AC_PROG_CC
 
 # Checks for header files.
 AC_CHECK_HEADERS([unistd.h])
+AC_CHECK_HEADERS([signal.h])
 
 # Check for POSIX complience
 AC_EGREP_CPP(posix_199309L_supported,
@@ -28,7 +29,7 @@ AC_EGREP_CPP(posix_199309L_supported,
               #endif
              ],
              [AC_DEFINE([_POSIX_C_SOURCE], [199309L], [Set POSIX version])],
-             [AC_MSG_FAILURE([*** Implementation must conform to the POSIX.1-1993 standard.])]
+             []
 )
 
 # Checks for typedefs, structures, and compiler characteristics.

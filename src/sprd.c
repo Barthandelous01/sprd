@@ -10,8 +10,12 @@
 #  error "You need at least a *nix compatability layer to use sprd"
 #endif	/* HAVE_MMAP */
 
+#ifdef HAVE_SIGNAL_H
+#  include <signal.h>
+#  include <sys/ioctl.h>
+#endif	/* HAVE_SIGNAL_H */
+
 #include <stdlib.h>
-#include <signal.h>
 #include <getopt.h>
 #include <stdio.h>
 
@@ -29,15 +33,25 @@ static struct option longopts[] = {
 	{"version", no_argument, NULL, 'V'}
 };
 
+/* These are global so that signals can modify them */
+int opt = 0, speed = 250, chunks = 1, ind = 1, width = 80;
+
+#ifdef HAVE_SIGNAL_H
 void sig_term(int signum)
 {
-	if(signum){}
+	struct winsize w;
+	ioctl(0, TIOCGWINSZ, &w);
+	width = w.ws_col;
+	reset_line();
 }
 
 void exit_int(int signum)
 {
-	if(signum){}
+	printf("To resume from this point, call with "
+		"-r %d\n", ind);
+	exit(EXIT_SUCCESS);
 }
+#endif	/* HAVE_SIGNAL_H */
 
 void usage() {
 	exit(EXIT_FAILURE);
@@ -51,20 +65,14 @@ void version()
 int main(int argc, char *argv[])
 {
 	/* declare variables */
-	char *filename = "";
-	int opt = 0, speed = 250, chunks = 1, ind = 1;
+	char *filename = "a long testing string";
 
 	/* set up signal handlers */
+#ifdef HAVE_SIGNAL_H
 	signal(SIGINT, &exit_int);
 	signal(SIGWINCH, &sig_term);
+#endif	/* HAVE_SIGNAL_H */
 
-	/* suppress warnings; for now */
-	if(opt){}
-	if(speed){}
-	if(ind){}
-	if(filename){}
-	if(chunks){}
-	
 	/* argument parsing */
 
 	while ((opt = getopt_long(argc, argv, "f:hw:c:r:V", longopts, NULL)) != -1) {
@@ -82,8 +90,13 @@ int main(int argc, char *argv[])
 			chunks = atoi(optarg);
 			break;
 		case 'r':
+#ifdef HAVE_SIGNAL_H
 			ind = atoi(optarg);
 			break;
+#else
+			printf("Resuming from a point is not supported on this platform.");
+			break;
+#endif
 		case 'V':
 			version();
 			break;
