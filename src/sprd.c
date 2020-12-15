@@ -54,11 +54,24 @@ void exit_int(int signum)
 #endif	/* HAVE_SIGNAL_H */
 
 void usage() {
+	printf("Usage: \n\t"PACKAGE_NAME" -f [file] -w [wpm] -c [chunks]\n"
+		"\n"
+		"OPTIONS:\n"
+		"\t-h, --help                 Display this message\n"
+		"\t-V, --version              Display version information\n"
+		"\t-f, --file                 Select file to read\n"
+		"\t-c, --chunks               Select words per chunk\n"
+		"\t-w, --wpm                  Select goal words per minute\n"
+		"\t-r, --resume               Start at a point midway in\n");
 	exit(EXIT_FAILURE);
 }
 
 void version()
 {
+	printf(PACKAGE_STRING"\nCopyright (C) 2020 Barthandelous01\n"
+		"License RBSD 3-Clause License.\n"
+		"This is free software; you are free to change and redistribute it.\n"
+		"There is NO WARRANTY, to the extent permitted by law.\n");
 	exit(EXIT_FAILURE);
 }
 
