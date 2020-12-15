@@ -15,7 +15,7 @@ void center_chunk(char *string, int start, int end, int width)
 	printf("%*c%.*s%*c",
 		(width - (end - start))/2 - 1, ' ',
 		(end-start+1), &string[start],
-		(width - (end - start))/2 + 1, ' ');
+		(width - (end - start))/2, ' ');
 	fflush(stdout);
 }
 

@@ -74,7 +74,6 @@ int main(int argc, char *argv[])
 #endif	/* HAVE_SIGNAL_H */
 
 	/* argument parsing */
-
 	while ((opt = getopt_long(argc, argv, "f:hw:c:r:V", longopts, NULL)) != -1) {
 		switch (opt) {
 		case 'f' :
