@@ -13,16 +13,21 @@
  */
 void center_chunk(char *string, int start, int end, int width)
 {
+	int i;
 	char str[end-start+1];
 
 	memset(str, 0, end-start+1);
 	strncpy(str, &string[start], end-start);
 
-	str[strcspn(str, "\r\n")] = ' ';
+	for (i = 0; i <= end-start+1; i++) {
+		if (str[i] == '\n')
+			str[i] = ' ';
+	}
 	printf("%*c%.*s%*c",
 		(width - (end - start))/2 - 1, ' ',
 		(end-start+1), str,
 		(width - (end - start))/2, ' ');
+
 	fflush(stdout);
 }
 

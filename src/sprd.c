@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
 	center_chunk(" |", 0, 3, width);
 	printf("\n");
 	do {
-		next_chunk(file, start, &end, chunks, width);
+		next_chunk(file, start, &end, chunks, size);
 		ind++;
 		if (ind < current) {
 			goto END;
