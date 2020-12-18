@@ -63,11 +63,11 @@ int time_incriment(int wpm, int chunks)
 void next_chunk(char *string, int start, int *end, int chunks, int length)
 {
 	int i = 0, j = 0;
-	if (isspace(string[start]))
+	if (isspace(string[start]) || string[start] == '\n')
 		j++;
 
 	while (i < chunks) {
-		if (isspace(string[start+j])) {
+		if (isspace(string[start+j]) || string[start+j] == '\n') {
 			i++;
 			j++;
 			continue;

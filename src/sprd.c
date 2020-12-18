@@ -85,7 +85,13 @@ int main(int argc, char *argv[])
 	int opt = 0, chunks = 1, fd;
 	char *filename = "-", *file;
 	struct stat s;
-	int size;
+	int size, start = 0, end;
+	int current = 0;
+	struct winsize w;
+
+	ioctl(0, TIOCGWINSZ, &w);
+	width = w.ws_col;
+	reset_line();
 
 	/* set up signal handlers */
 #ifdef HAVE_SIGNAL_H
@@ -110,7 +116,7 @@ int main(int argc, char *argv[])
 			break;
 		case 'r':
 #ifdef HAVE_SIGNAL_H
-			ind = atoi(optarg);
+			current = atoi(optarg);
 			break;
 #else
 			printf("Resuming from a point is not supported on this platform.");
@@ -146,10 +152,25 @@ int main(int argc, char *argv[])
 	if ((file = mmap(NULL, size, PROT_READ, MAP_SHARED, fd, 0)) == MAP_FAILED)
 		return EXIT_FAILURE;
 
+	printf("\n");
+	center_chunk(" |", 0, 3, width);
+	printf("\n");
+	do {
+		next_chunk(file, start, &end, chunks, width);
+		ind++;
+		if (ind < current) {
+			goto END;
+		} else {
+			center_chunk(file, start, end, width);
+			reset_line();
+			sleep_ms(time_incriment(speed, chunks));
+		}
+	END:
+		start = end;
+	} while (end != size - 1);
+
 	if (munmap(file, size) != 0)
 		return EXIT_FAILURE;
-
-	/* do things */
 
 	return EXIT_SUCCESS;
 }

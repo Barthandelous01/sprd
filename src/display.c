@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 
 /**
  * center_chunk() - print a string to the center of the terminal
@@ -12,9 +13,15 @@
  */
 void center_chunk(char *string, int start, int end, int width)
 {
+	char str[end-start+1];
+
+	memset(str, 0, end-start+1);
+	strncpy(str, &string[start], end-start);
+
+	str[strcspn(str, "\r\n")] = ' ';
 	printf("%*c%.*s%*c",
 		(width - (end - start))/2 - 1, ' ',
-		(end-start+1), &string[start],
+		(end-start+1), str,
 		(width - (end - start))/2, ' ');
 	fflush(stdout);
 }
