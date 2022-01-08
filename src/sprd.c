@@ -1,5 +1,9 @@
-#include <config.h>
-
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#else
+#  define PACKAGE_STRING
+#  define PACKAGE_NAME
+#endif
 #ifdef HAVE_UNISTD_H
 #  include <unistd.h>
 #else
@@ -26,8 +30,6 @@
 
 #include "display.h"
 #include "sleep.h"
-
-#define SIGWINCH 31
 
 static struct option longopts[] = {
 	{"file", required_argument, NULL, 'f'},
@@ -141,9 +143,9 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	} else {
 		if (isatty(fd) ||
-			(s.st_mode & S_IFMT) == S_IFIFO) {
+			S_ISFIFO(s.st_mode)) {
 			fprintf(stderr, "Cannot read from a pipe or interactive terminal."
-				"\nPlease try using a redirection operator (like <) instead.\n");
+					"\nPlease try using a redirection operator (like <) instead.\n");
 			return EXIT_FAILURE;
 		}
 		size = s.st_size;
